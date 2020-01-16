@@ -1,0 +1,25 @@
+import os
+import time
+from os import path
+
+
+def main():
+
+    while True:
+
+        os.system("CLS")
+        time.sleep(1)
+        print("Trying to connect...")
+
+        if path.exists("//Usmdcflex009/ksd/Department/TAR_Repository/Dev_files/"):
+
+            os.system("CLS")
+            break
+
+        else:
+            print("Connection failed... Check VPN connection...")
+            time.sleep(5)
+
+    os.startfile("C:/Users/cdelve/PycharmProjects/ion_drive_protection/check_files.py")
+
+main()
