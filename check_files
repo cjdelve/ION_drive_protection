@@ -1,0 +1,132 @@
+import os.path
+from os import path
+import time
+from tkinter import messagebox
+
+class checkAppFiles:
+
+    def __init__(self, tar, ems, elf, install):
+
+        # Set inital value of all program location to file path.
+        self._tar = tar
+        self._ems = ems
+        self._elf = elf
+        self._install = install
+
+        # Self._apps will hold all variables in one data set, this will allow them
+        # to be attached to either a true or false value, which represents if the
+        # file exists.
+        self._apps = {self._tar: ["TAR", False], self._ems: ["EMS", False],
+                      self._elf: ["ELF", False], self._install: ["Installer", False]}
+
+        # Status will hold the status value for each application in a more readable
+        # way than a file path.
+        self._status = []
+
+    def set_tar(self, tar):
+        self._tar = tar
+
+    def set_ems(self, ems):
+        self._ems = ems
+
+    def set_elf(self, elf):
+        self._elf = elf
+
+    def set_install(self, install):
+        self._install = install
+
+    def get_tar(self):
+        return self._tar
+
+    def get_ems(self):
+        return self._ems
+
+    def get_elf(self):
+        return self._elf
+
+    def get_install(self):
+        return self._install
+
+    def check_files(self):
+
+        # For each item in the application dictionary, check the file and assign it
+        # a true false value based on if the item is in the appropriate place or not.
+        for app_name in self._apps:
+
+            # Check each file path.
+            exists = check_file_exists(app_name)
+
+            # Set the value of each file path to the T/F value.
+            self._apps[app_name][1] = exists
+
+    def check_status(self):
+
+        for k in self._apps:
+
+            if self._apps[k][1] == False:
+
+                self._status.append(self._apps[k][0])
+
+    def display_results(self):
+
+        if len(self._status) != 0:
+
+            for k in self._status:
+                print("ISSUE FOUND: " + k)
+                input("Press Enter To Continue!")
+
+        else:
+            print("All Files In Place!")
+            input("Press Enter To Continue")
+
+
+def check_file_exists(file_path):
+
+    if path.exists(file_path):
+
+        return True
+
+    else:
+
+        return False
+
+
+def main():
+
+    while True:
+
+        os.system("CLS")
+        time.sleep(1)
+        print("Trying to connect...")
+
+        if path.exists("//Usmdcflex009/ksd/Department/TAR_Repository/Dev_files/"):
+
+            os.system("CLS")
+            break
+
+        else:
+            print("Connection failed... Check VPN connection...")
+            time.sleep(5)
+
+    tar = "//Usmdcflex009/ksd/Department/TAR_Repository/Dev_files/TAR.py"
+
+    # File has extension .lnk because it is a shortcut to an executable (.vbs file)
+    ems = "//Usmdcflex016/ksd/Project/ION_Product_Test_Drive/EMS_infractions/" \
+          "EMS_37_11.26.18.vbs.lnk"
+
+    # File has extension .lnk because it is a shortcut to an executable (.vbs file)
+    elf = "//Usmdcflex016/ksd/Project/ION_Product_Test_Drive/ELF/" \
+          "ELF_Assistant.vbs.lnk"
+    install = "//Usmdcflex016/ksd/Project/ION_Product_Test_Drive/ION_Installer/" \
+              "ION_install_P37.vbs"
+
+    verification = checkAppFiles(tar=tar, ems=ems, elf=elf, install=install)
+
+    verification.check_files()
+    verification.check_status()
+    verification.display_results()
+
+    # messagebox.showinfo("complete", "All files in place.")
+
+
+main()
